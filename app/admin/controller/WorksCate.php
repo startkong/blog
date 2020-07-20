@@ -21,7 +21,7 @@ use think\admin\Controller;
  * Class WorksCate
  * @package app\admin\controller
  */
-class WorksCate extends Controller
+class Workscate extends Controller
 {
     /**
      * 绑定数据表
