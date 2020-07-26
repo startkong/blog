@@ -16,7 +16,7 @@
 namespace app\admin\controller;
 
 use think\admin\Controller;
-use think\Db;
+use think\facade\Db;
 
 /**
  * 作品信息管理

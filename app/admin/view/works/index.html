@@ -1,17 +1,17 @@
 {extend name='main'}
 
 {block name="button"}
-<!--{if auth("store/goods/add")}-->
+<!--{if auth("admin/works/add")}-->
 <button data-open='{:url("add")}' data-title="添加作品" class='layui-btn layui-btn-sm layui-btn-primary'>添加作品</button>
 <!--{/if}-->
-<!--{if auth("store/goods/remove")}-->
+<!--{if auth("admin/works/remove")}-->
 <button data-action='{:url("remove")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除作品</button>
 <!--{/if}-->
 {/block}
 
 {block name="content"}
 <div class="think-box-shadow">
-    {include file='goods/index_search'}
+    {include file='works/index_search'}
     <table class="layui-table margin-top-10" lay-skin="line">
         {notempty name='list'}
         <thead>
