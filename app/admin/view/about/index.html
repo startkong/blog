@@ -1,53 +1,40 @@
 {extend name="main"}
 {block name="content"}
-<div class="think-box-shadow padding-40 padding-top-30 padding-bottom-20 margin-bottom-15">
-    <div class="layui-form-item">
-        <div class="color-green font-w7">网站名称 Website</div>
-        <label class="relative block">
-            <input readonly value="{:sysconf('site_name')}" class="layui-input layui-bg-gray">
-            <a data-copy="{:sysconf('site_name')}" class="fa fa-copy input-right-icon"></a>
+<form onsubmit="return false" data-auto="true" action="{:request()->url()}" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body padding-left-40">
+        <label class="layui-form-item relative block">
+            <span class="color-green font-w7">首页轮播图</span>
+            <span class="color-desc margin-left-5">Img</span>
+            <input class="layui-input" required pattern="^http" placeholder="请上传浏览器图标　　" value="{:sysconf('index_header_img')}" name="index_header_img">
+            <a class="input-right-icon layui-icon layui-icon-upload-circle" style="top:25px" data-file="btn" data-type="jpg,png" data-field="index_header_img"></a>
+            <span class="help-block">建议上传 <span class="color-blue">3278x992</span> 的 png 图片</span>
         </label>
-        <div class="help-block">网站名称及网站图标，将显示在浏览器的标签上</div>
-    </div>
-    <div class="layui-form-item">
-        <div class="color-green font-w7">管理程序名称 Name</div>
-        <label class="relative block">
-            <input readonly placeholder="请输入程序名称" value="{:sysconf('app_name')}" class="layui-input layui-bg-gray">
-            <a data-copy="{:sysconf('app_name')}" class="fa fa-copy input-right-icon"></a>
+        <label class="layui-form-item relative block">
+            <span class="color-green font-w7">关于作者介绍图</span>
+            <span class="color-desc margin-left-5">Img</span>
+            <input class="layui-input" required pattern="^http" placeholder="请上传浏览器图标　　" value="{:sysconf('about_author_img')}" name="about_author_img">
+            <a class="input-right-icon layui-icon layui-icon-upload-circle" style="top:25px" data-file="btn" data-type="jpg,png" data-field="about_author_img"></a>
+            <span class="help-block">建议上传 <span class="color-blue">528x642</span> 的 png 图片</span>
         </label>
-        <div class="help-block">管理程序名称，将显示在后台左上角标题</div>
-    </div>
-    <div class="layui-form-item">
-        <div class="color-green font-w7">管理程序版本 Version</div>
-        <label class="relative block">
-            <input readonly value="{:sysconf('app_version')}" class="layui-input layui-bg-gray">
-            <a data-copy="{:sysconf('app_version')}" class="fa fa-copy input-right-icon"></a>
+        <label class="layui-form-item relative block">
+            <span class="color-green font-w7">关于作者介绍信息</span>
+            <span class="color-desc margin-left-5">About US</span>
+            <textarea name="about_author_info" class="layui-input">{:sysconf('about_author_info')}</textarea>
+            <span class="help-block">首页关于作者描述信息部分内容</span>
         </label>
-        <div class="help-block">管理程序版本，将显示在后台左上角标题</div>
+        <div class="hr-line-dashed "></div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">保存配置</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+        </div>
     </div>
-    <div class="layui-form-item">
-        <span class="color-green font-w7">公网备案号 Baian</span>
-        <label class="relative block">
-            <input readonly value="{:sysconf('beian')}" placeholder="请输入公网备案号" class="layui-input layui-bg-gray">
-            <a data-copy="{:sysconf('beian')}" class="fa fa-copy input-right-icon"></a>
-        </label>
-        <p class="help-block">公网备案号，可以在<a target="_blank" href="http://beian.miit.gov.cn">备案管理中心</a>查询获取，将在登录页面下面显示</p>
-    </div>
-    <div class="layui-form-item">
-        <div class="color-green font-w7">网站备案号 Miitbeian</div>
-        <label class="relative block">
-            <input readonly value="{:sysconf('miitbeian')}" class="layui-input layui-bg-gray">
-            <a data-copy="{:sysconf('miitbeian')}" class="fa fa-copy input-right-icon"></a>
-        </label>
-        <div class="help-block">网站备案号，可以在<a target="_blank" href="http://beian.miit.gov.cn">备案管理中心</a>查询获取，将显示在登录页面下面</div>
-    </div>
-    <div class="layui-form-item">
-        <div class="color-green font-w7">网站版权信息 Copyright</div>
-        <label class="relative block">
-            <input readonly value="{:sysconf('site_copy')}" class="layui-input layui-bg-gray">
-            <a data-copy="{:sysconf('site_copy')}" class="fa fa-copy input-right-icon"></a>
-        </label>
-        <div class="help-block">网站版权信息，在后台登录页面显示版本信息并链接到备案到信息备案管理系统</div>
-    </div>
-</div>
+</form>
+{/block}
+{block name='script'}
+<script>
+    window.form.render();
+    require(['ckeditor', 'angular'], function () {
+        window.createEditor('[name="about_author_info"]', {height: 500});
+    });
+</script>
 {/block}

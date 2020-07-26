@@ -102,8 +102,6 @@ class Works extends Controller
      */
     protected function _form_filter(&$data)
     {
-        // 生成作品ID
-        if (empty($data['id'])) $data['id'] = Data::uniqidNumberCode(14);
         if ($this->request->isGet()) {
 //            $fields = 'goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual `virtual`,number_express express';
 //            $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);

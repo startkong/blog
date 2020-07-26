@@ -25,13 +25,6 @@ use think\admin\service\SystemService;
  */
 class About extends Controller
 {
-
-    /**
-     * 绑定数据表
-     * @var string
-     */
-    protected $table = 'BlogAbloutMe';
-
     /**
      * 系统参数配置
      * @auth true
@@ -40,6 +33,24 @@ class About extends Controller
     public function index()
     {
         $this->title = '系统参数配置';
+        $this->_applyFormToken();
+        if ($this->request->isGet()) {
+            $this->title = '修改系统参数';
+            $this->fetch();
+        } else {
+            if ($xpath = $this->request->post('xpath')) {
+                if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]+$/', $xpath)) {
+                    $this->error('后台入口名称需要是由英文字母开头！');
+                }
+                if ($xpath !== 'admin' && file_exists($this->app->getBasePath() . $xpath)) {
+                    $this->error("后台入口名称{$xpath}已经存在应用！");
+                }
+                SystemService::instance()->setRuntime([$xpath => 'admin']);
+            }
+            foreach ($this->request->post() as $name => $value) sysconf($name, $value);
+            $this->success('修改系统参数成功！');
+        }
+
         $this->fetch();
     }
 
