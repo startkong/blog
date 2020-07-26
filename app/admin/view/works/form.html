@@ -20,23 +20,31 @@
                 <input name="title" required class="layui-input" placeholder="请输入作品名称" value="{$vo.title|default=''}">
             </label>
         </div>
-
-
-        <div class="layui-form-item">
-            <span class="color-green label-required-prev">作品LOGO及轮播展示图片</span>
+        <div class="layui-form-item layui-col-xs3">
+            <span class="color-green label-required-prev">作品封面图</span>
             <table class="layui-table">
                 <thead>
                 <tr>
-                    <th class="text-center">LOGO</th>
-                    <th class="text-left">展示图片</th>
+                    <th class="text-center">作品封面图</th>
                 </tr>
                 <tr>
                     <td width="90px" class="text-center"><input name="logo" type="hidden" value="{$vo.logo|default=''}"></td>
-                    <td width="auto" class="text-left"><input name="image" type="hidden" value="{$vo.image|default=''}"></td>
                 </tr>
                 </thead>
             </table>
             <script>$('[name="logo"]').uploadOneImage(), $('[name="image"]').uploadMultipleImage()</script>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">查看人数</span>
+                <input name="number_sales" class="layui-input" placeholder="请输入查看人数" value="{$vo.number_sales|default=0}">
+            </label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">发布时间</span>
+                <input name="send_time" required class="layui-input" id="send_time" placeholder="yyyy-MM-dd" value="{$vo.send_time|default=''}">
+            </label>
         </div>
 
 
@@ -60,6 +68,15 @@
 <textarea class="layui-hide" id="goods-value">{$defaultValues|raw|default=''}</textarea>
 <script>
     window.form.render();
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        //常规用法
+        laydate.render({
+            elem: '#send_time'
+        });
+    });
+
     require(['ckeditor', 'angular'], function () {
         window.createEditor('[name="content"]', {height: 500});
         var app = angular.module("GoodsForm", []).run(callback);

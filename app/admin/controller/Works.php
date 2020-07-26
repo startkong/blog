@@ -109,17 +109,16 @@ class Works extends Controller
             $this->cates = Db::name('BlogWorksCate')->where(['is_deleted' => '0', 'status' => '1'])->order('sort desc,id desc')->select();
         } elseif ($this->request->isPost()) {
             if (empty($data['logo'])) $this->error('作品LOGO不能为空，请上传图片');
-            if (empty($data['image'])) $this->error('作品展示图片不能为空，请上传图片');
-            Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->update(['status' => '0']);
-            foreach (json_decode($data['lists'], true) as $vo) Data::save('StoreGoodsList', [
-                'goods_id'       => $data['id'],
-                'goods_spec'     => $vo[0]['key'],
-                'price_market'   => $vo[0]['market'],
-                'price_selling'  => $vo[0]['selling'],
-                'number_virtual' => $vo[0]['virtual'],
-                'number_express' => $vo[0]['express'],
-                'status'         => $vo[0]['status'] ? 1 : 0,
-            ], 'goods_spec', ['goods_id' => $data['id']]);
+//            Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->update(['status' => '0']);
+//            foreach (json_decode($data['lists'], true) as $vo) Data::save('StoreGoodsList', [
+//                'goods_id'       => $data['id'],
+//                'goods_spec'     => $vo[0]['key'],
+//                'price_market'   => $vo[0]['market'],
+//                'price_selling'  => $vo[0]['selling'],
+//                'number_virtual' => $vo[0]['virtual'],
+//                'number_express' => $vo[0]['express'],
+//                'status'         => $vo[0]['status'] ? 1 : 0,
+//            ], 'goods_spec', ['goods_id' => $data['id']]);
         }
     }
 
