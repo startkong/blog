@@ -11,6 +11,9 @@ namespace app\blogapi\controller;
 
 
 use app\blogapi\controller\api\BasicApi;
+use think\Exception;
+use think\facade\Db;
+use think\Validate;
 
 class Index extends BasicApi
 {
@@ -149,5 +152,52 @@ class Index extends BasicApi
             'look_count' => 9876,
             'detail' => '<img scr="https://file.yingshangyan.com/WechatIMG21.png" alt="个人博客"><br/><img src="https://file.yingshangyan.com/WechatIMG22.png" alt="个人博客">'
         ]);
+    }
+
+    public function add_message()
+    {
+        try{
+            $data = [
+                'name'       => input('post.name/s', 'fds'),
+                'email'      => input('post.email/s', 'fsd'),
+                'master_item'=> input('post.master_item/s', 'fdsa'),
+                'message'    => input('post.message/s', 'fds'),
+            ];
+            $vali = [
+                'name'  => 'require|length:2,100',
+                'email' => 'require|email',
+                'master_item' => 'require|length:1,100',
+                'message'    => 'require|length:1,10000',
+            ];
+            $vali_msg = [
+                'name.require'   => '名字不能为空',
+                'name.length'    => '名字只能是2-100字之间',
+                'email.require'  => '邮箱不能为空',
+                'email.email'   => '邮箱格式错误',
+                'master_item.require'  => '主题不能为空',
+                'master_item.length'   => '主题只能是1-100字之间',
+                'message.require'     => '留言信息不能为空',
+                'message.length'      => '留言信息只能是1-10000字之间',
+            ];
+            $validate = new Validate($vali, $vali_msg);
+            $result = $validate->check($data);
+            if(!$result) {
+                throw new Exception($validate->getError());
+            }
+            if(!Db::table('blog_message')->insert([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'master_item' => $data['master_item'],
+                'message' => $data['message'],
+                'ip' => $this->request->ip(),
+            ])) {
+                throw new Exception('添加数据失败');
+            }
+
+
+            $this->success('提交成功', []);
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 }
