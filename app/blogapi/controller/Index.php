@@ -13,6 +13,7 @@ namespace app\blogapi\controller;
 use app\blogapi\controller\api\BasicApi;
 use think\Exception;
 use think\facade\Db;
+use think\Model;
 use think\Validate;
 
 class Index extends BasicApi
@@ -20,138 +21,61 @@ class Index extends BasicApi
 
     public function get_index()
     {
+        $config_base = array_column((array)Db::table('system_config')->where(['type' => 'base'])->select()->toArray(), 'value', 'name');
+
+
         $this->success('获取首页信息', [
-            'index_logo_img' => 'https://file.yingshangyan.com/2.png',
-            'index_header_img' => 'https://file.yingshangyan.com/1.png',
-            'about_author_info' => '现在流行的设计过程注重以用户为中心。用户体验的概念从开发的最早期就开始进入整个流程，并贯穿始终。其目的就是保证（1）对用户体验有正确的预估（2）认识用户的真实期望和目的（3）在功能核心还能够以低廉成本加以修改的时候对设计进行修正（4）保证功能核心同人机界面之间的协调工作，减少BUG。 在具体的实施上，就包括了早期的focus group（焦点小组），contextual interview，和开发过程中的多次usability study（可用性实验），以及后期的user test（用户测试）。在设计--测试--修改这个反复循环的开发流程中，可用性实验为何时出离该循环提供了可量化的指标。',
-            'about_author_img' => 'https://file.yingshangyan.com/3.png',
-            'new_product' => [
-                [
-                    'id'        => 1,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG13.png',
-                ],
-                [
-                    'id'        => 2,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG14.png',
-                ],
-                [
-                    'id'        => 3,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG15.png',
-                ],
-                [
-                    'id'        => 4,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG16.png',
-                ],
-                [
-                    'id'        => 5,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG17.png',
-                ],
-                [
-                    'id'        => 6,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG18.png',
-                ]
-            ]
+            'index_logo_img'    => isset($config_base['index_logo_img'])?$config_base['index_logo_img']:'',
+            'index_header_img'  => isset($config_base['index_header_img'])?$config_base['index_header_img']:'',
+            'about_author_info' => isset($config_base['about_author_info'])?$config_base['about_author_info']:'',
+            'about_author_img'  => isset($config_base['about_author_img'])?$config_base['about_author_img']:'',
+            'new_product' => Db::table('blog_works')->field('id, title, number_sales look_count, logo img')->order('sort')->limit(6)->select()->toArray()
         ]);
     }
 
     public function get_header_list()
     {
+        $config_base = array_column((array)Db::table('system_config')->where(['type' => 'base'])->select()->toArray(), 'value', 'name');
+
         $this->success('获取列表页信息', [
-            'index_logo_img' => 'https://file.yingshangyan.com/2.png',
-            'lunbo_list' => [
-                'https://file.yingshangyan.com/WechatIMG19.png'
-            ],
-            'cate_list' => [
-                [
-                    'id' => 1,
-                    'cat_name' => 'PC端',
-                ],
-                [
-                    'id' => 2,
-                    'cat_name' => '小程序',
-                ],
-                [
-                    'id' => 3,
-                    'cat_name' => 'APP',
-                ],
-                [
-                    'id' => 4,
-                    'cat_name' => '互动屏',
-                ],
-            ]
+            'index_logo_img' => isset($config_base['index_logo_img'])?$config_base['index_logo_img']:'',
+            'lunbo_list' => Db::table('blog_works_img')->where(['status' => 1])->order('sort')->column('logo'),
+            'cate_list' => Db::table('blog_works_cate')->field('id, title cat_name')->where(['status' => 1, 'is_deleted' => 0])->order('sort')->select()->toArray()
         ]);
     }
 
     public function get_data_list()
     {
+        $cat_id     = input('get.cat_id/d', 0);
+        $page       = input('get.page/d', 1);
+        $page_size  = input('get.page_size/d', 10);
 
         $this->success('获取列表页数据', [
-            'sum_count' => 30,
-            'cur_page' => 0,
-            'page_size' => 10,
-            'data_list' => [
-                [
-                    'id'        => 1,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG13.png',
-                ],
-                [
-                    'id'        => 2,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG14.png',
-                ],
-                [
-                    'id'        => 3,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG15.png',
-                ],
-                [
-                    'id'        => 4,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG16.png',
-                ],
-                [
-                    'id'        => 5,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG17.png',
-                ],
-                [
-                    'id'        => 6,
-                    'title'     => '名称后台配置前端极数',
-                    'look_count'=> 2339,
-                    'img'       => 'https://file.yingshangyan.com/WechatIMG18.png',
-                ]
-            ]
-
+            'sum_count' => Db::table('blog_works')->where(['cate_id' => $cat_id])->count(),
+            'cur_page' => $page,
+            'page_size' => $page_size,
+            'data_list' => Db::table('blog_works')->field('id, title, number_sales look_count, logo img')->where(['cate_id' => $cat_id])->limit(max(0, ($page - 1) * $page_size), $page_size)->select()->toArray()
         ]);
     }
 
     public function get_detail()
     {
+
+        $id = input('get.id/d', 0);
+        $config_base = array_column((array)Db::table('system_config')->where(['type' => 'base'])->select()->toArray(), 'value', 'name');
+        $info = Db::table('blog_works')->field('id, title, send_time, number_sales, content')->where(['id' => $id])->find();
+        if($info) {
+            Db::table('blog_works')->where(['id' => $id])->save(['number_sales' => $info['number_sales']+1]);
+        }
         $this->success('获取详情页页信息', [
-            'detail_header_img' => 'https://file.yingshangyan.com/WechatIMG20.png',
-            'title' => '标题标题标题标题标题标题题标题标题标题标题题标题标题标',
-            'send_time' => '2020-09-18',
-            'look_count' => 9876,
-            'detail' => '<img scr="https://file.yingshangyan.com/WechatIMG21.png" alt="个人博客"><br/><img src="https://file.yingshangyan.com/WechatIMG22.png" alt="个人博客">'
-        ]);
+                'id'            => isset($info['id'])?$info['id']:'',
+                'title'         => isset($info['title'])?$info['title']:'',
+                'send_time'     => isset($info['send_time'])?$info['send_time']:'',
+                'look_count'    => isset($info['number_sales'])?$info['number_sales']:'',
+                'detail'        => isset($info['content'])?$info['content']:'',
+                'detail_header_img' => isset($config_base['detail_header_img'])?$config_base['detail_header_img']:''
+            ]
+        );
     }
 
     public function add_message()

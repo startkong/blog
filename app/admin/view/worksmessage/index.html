@@ -17,42 +17,21 @@
             <th class='list-table-check-td think-checkbox'>
                 <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
             </th>
-            <th class='list-table-sort-td'>
-                <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
-            </th>
             <th class='text-left nowrap' width="10%">名字</th>
             <th class='text-left nowrap' width="20%">邮箱</th>
             <th class='text-left nowrap' width="20%">主题</th>
-            <th class='text-left nowrap' width="10%">留言</th>
-            <th></th>
+            <th class='text-left'>留言</th>
         </tr>
         </thead>
         {/notempty}
         <tbody>
         {foreach $list as $key=>$vo}
         <tr data-dbclick>
+            <td class='text-left nowrap'>{$vo.id|default=''}</td>
             <td class='text-left nowrap'>{$vo.name|default=''}</td>
             <td class='text-left nowrap'>{$vo.email|default=''}</td>
             <td class='text-left nowrap'>{$vo.master_item|default=''}</td>
             <td class='text-left nowrap'>{$vo.message|default=0}</td>
-            <td class='text-left nowrap'>
-                <div class="nowrap margin-bottom-5">
-
-                    {if isset($vo.status) and $vo.status eq 1}
-                    <!--{if auth("store/goods/forbid")}-->
-                    <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">关 闭</a>
-                    <!--{else}-->
-                    <a data-tips-text="您没有下架作品的权限哦！" class="layui-btn layui-btn-sm layui-btn-primary layui-disabled">开 启</a>
-                    <!--{/if}-->
-                    {else}
-                    <!--{if auth("store/goods/resume")}-->
-                    <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">开 启</a>
-                    <!--{else}-->
-                    <a data-tips-text="您没有上架作品的权限哦！" class="layui-btn layui-btn-sm layui-btn-primary layui-disabled">关 闭</a>
-                    <!--{/if}-->
-                    {/if}
-                </div>
-            </td>
         </tr>
         {/foreach}
         </tbody>

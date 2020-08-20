@@ -3,12 +3,29 @@
 <form onsubmit="return false" data-auto="true" action="{:request()->url()}" method="post" class='layui-form layui-card' autocomplete="off">
     <div class="layui-card-body padding-left-40">
         <label class="layui-form-item relative block">
+            <span class="color-green font-w7">LOGO</span>
+            <span class="color-desc margin-left-5">Img</span>
+            <input class="layui-input" required pattern="^http" placeholder="请上传浏览器图标　　" value="{:sysconf('index_logo_img')}" name="index_logo_img">
+            <a class="input-right-icon layui-icon layui-icon-upload-circle" style="top:25px" data-file="btn" data-type="jpg,png" data-field="index_logo_img"></a>
+            <span class="help-block">建议上传 <span class="color-blue">100x100</span> 的 png 图片</span>
+        </label>
+
+        <label class="layui-form-item relative block">
             <span class="color-green font-w7">首页轮播图</span>
             <span class="color-desc margin-left-5">Img</span>
             <input class="layui-input" required pattern="^http" placeholder="请上传浏览器图标　　" value="{:sysconf('index_header_img')}" name="index_header_img">
             <a class="input-right-icon layui-icon layui-icon-upload-circle" style="top:25px" data-file="btn" data-type="jpg,png" data-field="index_header_img"></a>
             <span class="help-block">建议上传 <span class="color-blue">3278x992</span> 的 png 图片</span>
         </label>
+
+        <label class="layui-form-item relative block">
+            <span class="color-green font-w7">详情头部图片</span>
+            <span class="color-desc margin-left-5">Img</span>
+            <input class="layui-input" required pattern="^http" placeholder="请上传浏览器图标　　" value="{:sysconf('detail_header_img')}" name="detail_header_img">
+            <a class="input-right-icon layui-icon layui-icon-upload-circle" style="top:25px" data-file="btn" data-type="jpg,png" data-field="detail_header_img"></a>
+            <span class="help-block">建议上传 <span class="color-blue">1080x100</span> 的 png 图片</span>
+        </label>
+
         <label class="layui-form-item relative block">
             <span class="color-green font-w7">关于作者介绍图</span>
             <span class="color-desc margin-left-5">Img</span>
