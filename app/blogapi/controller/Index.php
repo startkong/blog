@@ -46,9 +46,9 @@ class Index extends BasicApi
 
     public function get_data_list()
     {
-        $cat_id     = input('get.cat_id/d', 0);
-        $page       = input('get.page/d', 1);
-        $page_size  = input('get.page_size/d', 10);
+        $cat_id     = input('post.cat_id/d', 0);
+        $page       = input('post.page/d', 1);
+        $page_size  = input('post.page_size/d', 10);
 
         $this->success('获取列表页数据', [
             'sum_count' => Db::table('blog_works')->where(['cate_id' => $cat_id])->count(),
@@ -61,7 +61,7 @@ class Index extends BasicApi
     public function get_detail()
     {
 
-        $id = input('get.id/d', 0);
+        $id = input('post.cat_id/d', 0);
         $config_base = array_column((array)Db::table('system_config')->where(['type' => 'base'])->select()->toArray(), 'value', 'name');
         $info = Db::table('blog_works')->field('id, title, send_time, number_sales, content')->where(['id' => $id])->find();
         if($info) {
