@@ -60,15 +60,11 @@
                     <a data-tips-text="您没有上架作品的权限哦！" class="layui-btn layui-btn-sm layui-btn-primary layui-disabled">关 闭</a>
                     <!--{/if}-->
                     {/if}
-                </div>
-
-                <div class="nowrap margin-bottom-5">
                     {if auth("store/goods/remove")}
                     <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除数据吗?" data-action="{:url('remove')}" data-value="id#{$vo.id}">删 除</a>
                     {else}
                     <a data-tips-text="您没有删除作品的权限哦！" class="layui-btn layui-btn-sm layui-btn-primary layui-disabled">删 除</a>
                     {/if}
-
                 </div>
 
             </td>
