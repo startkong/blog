@@ -29,7 +29,7 @@ class Index extends BasicApi
             'index_header_img'  => isset($config_base['index_header_img'])?$config_base['index_header_img']:'',
             'about_author_info' => isset($config_base['about_author_info'])?$config_base['about_author_info']:'',
             'about_author_img'  => isset($config_base['about_author_img'])?$config_base['about_author_img']:'',
-            'new_product' => Db::table('blog_works')->field('id, title, number_sales look_count, logo img')->order('sort')->limit(6)->select()->toArray()
+            'new_product' => Db::table('blog_works')->field('id, title, number_sales look_count, logo img')->where(['is_deleted' => 0, 'status' => 1])->order('sort')->limit(6)->select()->toArray()
         ]);
     }
 
@@ -51,10 +51,10 @@ class Index extends BasicApi
         $page_size  = input('post.page_size/d', 10);
 
         $this->success('获取列表页数据', [
-            'sum_count' => Db::table('blog_works')->where(['cate_id' => $cat_id])->count(),
+            'sum_count' => Db::table('blog_works')->where(['cate_id' => $cat_id, 'is_deleted' => 0, 'status' => 1])->count(),
             'cur_page' => $page,
             'page_size' => $page_size,
-            'data_list' => Db::table('blog_works')->field('id, title, number_sales look_count, logo img')->where(['cate_id' => $cat_id])->limit(max(0, ($page - 1) * $page_size), $page_size)->select()->toArray()
+            'data_list' => Db::table('blog_works')->field('id, title, number_sales look_count, logo img')->where(['cate_id' => $cat_id, 'is_deleted' => 0, 'status' => 1])->limit(max(0, ($page - 1) * $page_size), $page_size)->select()->toArray()
         ]);
     }
 
