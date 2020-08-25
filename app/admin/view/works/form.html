@@ -43,7 +43,7 @@
         <div class="layui-form-item">
             <label class="layui-col-xs9 relative">
                 <span class="color-green">发布时间</span>
-                <input name="send_time" required class="layui-input" id="send_time" placeholder="yyyy-MM-dd" value="{$vo.send_time|default=''}">
+                <input name="send_time" required class="layui-input" id="send_time" placeholder="yyyy-MM-dd HH:mm:ss" value="{$vo.send_time|default=''}">
             </label>
         </div>
 
@@ -74,6 +74,7 @@
         //常规用法
         laydate.render({
             elem: '#send_time'
+            ,type: 'datetime'
         });
     });
 
