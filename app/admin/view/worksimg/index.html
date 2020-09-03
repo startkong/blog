@@ -23,6 +23,7 @@
                 <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
             </th>
             <th class='text-left nowrap'>轮播图</th>
+            <th class='text-left'>链接</th>
             <th class="text-center">状态</th>
             <th class="text-center"></th>
             <th></th>
@@ -41,6 +42,9 @@
             <td class='text-left nowrap'>
                 <a data-tips-image="{$vo.logo|default=''}" class="fa fa-image font-s14 margin-right-5"></a>
                 <!--{$vo.title|default=''}-->
+            </td>
+            <td class='text-left nowrap'>
+                <a href="{$vo.link|default=''}" target="_blank">链接</a>
             </td>
             <td class='text-center nowrap'>
                 {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}<br>

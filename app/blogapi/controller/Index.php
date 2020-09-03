@@ -39,7 +39,7 @@ class Index extends BasicApi
 
         $this->success('获取列表页信息', [
             'index_logo_img' => isset($config_base['index_logo_img'])?$config_base['index_logo_img']:'',
-            'lunbo_list' => Db::table('blog_works_img')->where(['status' => 1, 'is_deleted' => 0])->order('sort')->column('logo'),
+            'lunbo_list' => Db::table('blog_works_img')->field('logo,link')->where(['status' => 1, 'is_deleted' => 0])->order('sort')->select(),
             'cate_list' => Db::table('blog_works_cate')->field('id, title cat_name')->where(['status' => 1, 'is_deleted' => 0])->order('sort')->select()->toArray()
         ]);
     }
